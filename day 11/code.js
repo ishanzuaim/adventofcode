@@ -1,64 +1,118 @@
-const fs = require("fs");
+// const fs = require("fs");
 
-const file = fs.readFileSync("test.txt", "utf-8");
+// const file = fs.readFileSync("sample.txt", "utf-8");
+test_ls = [
+  {
+    "items": [79, 98],
+    "op": (val) => val * 19,
+    "divisible": 23,
+    "true": 2,
+    "false": 3,
+    "insp": 0
+  }, {
+    "items": [54, 65, 75, 74],
+    "op": (val) => val + 6,
+    "divisible": 19,
+    "true": 2,
+    "false": 0,
+    "insp": 0
+  }, {
+    "items": [79, 60, 97],
+    "op": (val) => val * val,
+    "divisible": 13,
+    "true": 1,
+    "false": 3,
+    "insp": 0
+  }, {
+    "items": [74],
+    "op": (val) => val + 3,
+    "divisible": 17,
+    "true": 0,
+    "false": 1,
+    "insp": 0
+  }]
+ls = [
+  {
+    "items": [98, 70, 75, 80, 84, 89, 55, 98],
+    "op": (val) => val * 2,
+    "divisible": 11,
+    "true": 1,
+    "false": 4,
+    "insp": 0
+  },
+  {
+    "items": [59],
+    "op": (val) => val * val,
+    "divisible": 19,
+    "true": 7,
+    "false": 3,
+    "insp": 0
+  },
+  {
+    "items": [77, 95, 54, 65, 89],
+    "op": (val) => val + 6,
+    "divisible": 7,
+    "true": 0,
+    "false": 5,
+    "insp": 0
+  },
+  {
+    "items": [71, 64, 75],
+    "op": (val) => val + 2,
+    "divisible": 17,
+    "true": 6,
+    "false": 2,
+    "insp": 0
+  },
+  {
+    "items": [74, 55, 87, 98],
+    "op": (val) => val * 11,
+    "divisible": 3,
+    "true": 1,
+    "false": 7,
+    "insp": 0
+  },
+  {
+    "items": [90, 98, 85, 52, 91, 60],
+    "op": (val) => val + 7,
+    "divisible": 5,
+    "true": 0,
+    "false": 4,
+    "insp": 0
+  },
+  {
+    "items": [99, 51],
+    "op": (val) => val + 1,
+    "divisible": 13,
+    "true": 5,
+    "false": 2,
+    "insp": 0
+  },
+  {
+    "items": [98, 94, 59, 76, 51, 65, 75],
+    "op": (val) => val + 5,
+    "divisible": 2,
+    "true": 3,
+    "false": 6,
+    "insp": 0
+  },
+]
 
-const op_fn = (code) => {
-  const code_val = code[2] !== "old" ? parseInt(code[2], 10): "old";
-  if(code[1] == "*") {
-   return (val) => BigInt(val)*((code_val === "old") ? BigInt(val) : BigInt(code_val));
-  } else if(code[1] == "+") {
-   return (val) => BigInt(val)+((code_val === "old") ? BigInt(val) : BigInt(code_val));
-  } else if(code[1] == "/") {
-   return (val) => BigInt(val)/((code_val === "old") ? BigInt(val) : BigInt(code_val));
-  } else if(code[1] == "-") {
-   return (val) => BigInt(val)-((code_val === "old") ? BigInt(val) : BigInt(code_val));
-  }
-}
+const prod = ls.map(x => x.divisible).reduce((a, b) => a * b, 1);
+for (let i = 0; i < 10_000; i++) {
 
-const ls = []
-let n = -1;
-file.split("\n").forEach((f) => {
-  if(f.startsWith("Monkey")) {
-    ls.push({});
-    n+=1;
-  } else {
-    const [inst, amt] = f.split(": ");
-    if(inst.includes("Starting")) {
-     ls[n]["items"] = [...amt.split(", ").map(i => parseInt(i, 10))];
-    } else if(inst.includes("Operation")) {
-      ls[n]["op"] = op_fn(amt.split(" = ")[1].split(" "));
-    } else if(inst.includes("Test")) {
-      ls[n]["divisible"] = parseInt(amt.split(" ")[2], 10);
-    } else if(inst.includes("If true")) {
-      ls[n]["true"]  = parseInt(amt.split(" ")[3], 10)
-    } else if(inst.includes("If false")) {
-      ls[n]["false"] = parseInt(amt.split(" ")[3], 10)
+  for (const l of ls) {
+    while (l.items.length >= 1) {
+      const item = l.items.shift();
+      // const value = Math.floor(ls[j]["op"](item)/3);
+      let value = l.op(item) % prod
+      l.insp += 1;
+      if (value % l.divisible === 0) {
+        ls[l.true].items.push(value)
+      } else {
+        ls[l.false].items.push(value)
+      }
     }
   }
-});
-
-count = []
-ls.forEach(l => {
-  count.push(0)
-})
-for(let i = 0; i < 10000; i++) {
-
-  for(let j = 0; j < ls.length; j++) {
-    for(let k = 0; k < ls[j]["items"].length; k++) {
-      const itemAtIndex = ls[j]["items"][k];
-      // const value = Math.floor(ls[j]["op"](itemAtIndex)/3);
-      const value= ls[j]["op"](itemAtIndex)
-      // console.log(value)
-      count[j]+=1;
-      if(value  % BigInt(ls[j]["divisible"]) === 0) {
-        ls[ls[j]["true"]]["items"].push(value)
-      } else {
-        ls[ls[j]["false"]]["items"].push(value)
-      }
-     }
-  ls[j]["items"] = []
-  }
-  
 }
-console.log(count)
-console.log(count.sort((a, b) => b -a).slice(0, 2).reduce((a, b) => a*b));
+console.log(ls.map(x => x.insp).sort((a, b) => b - a).slice(0, 2).reduce((a, b) => a * b));
