@@ -1,0 +1,33 @@
+package main
+
+import (
+	"fmt"
+	"regexp"
+	"strings"
+)
+
+func main() {
+	strs := strings.Join(readFile(), "")
+	re := regexp.MustCompile(`mul\(\d+,\d+\)|do\(\)|don't\(\)`)
+
+	matched := re.FindAllString(strs, -1)
+	flag := 0
+	total := 0
+	for _, val := range matched {
+		if val == "do()" {
+			flag = 0
+		} else if val == "don't()" {
+			flag = 1
+		} else if flag == 0 {
+			total += multiplyNum(val)
+		}
+	}
+	fmt.Println(total)
+}
+
+func multiplyNum(val string) int {
+	// mul(1, 2)
+	re2 := regexp.MustCompile(`\d+`)
+	nums := re2.FindAllString(val, -1)
+	return convToInt(nums[0]) * convToInt(nums[1])
+}
