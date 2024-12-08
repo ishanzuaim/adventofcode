@@ -30,17 +30,17 @@ func main() {
 	// __AUTO_GENERATED_PRINT_VAR_START__
 	fmt.Println(fmt.Sprintf("main all: %v", len(all))) // __AUTO_GENERATED_PRINT_VAR_END__
 
-  for y := 0; y < gs.boundaries.y; y++ {
-    for x := 0; x < gs.boundaries.x; x++ {
-      if isExist(all, Position{x, y}) {
-        fmt.Print("#")
-      } else {
-        fmt.Print(".")
-      }
-    }
-    fmt.Print("\n")
-  }
-  }
+	for y := 0; y < gs.boundaries.y; y++ {
+		for x := 0; x < gs.boundaries.x; x++ {
+			if isExist(all, Position{x, y}) {
+				fmt.Print("#")
+			} else {
+				fmt.Print(".")
+			}
+		}
+		fmt.Print("\n")
+	}
+}
 
 func merge(posA, posB []Position) []Position {
 	newPos := posA
@@ -91,9 +91,9 @@ func (gs *GameSettings) findCloseAntinodesP2(chr string) []Position {
 			tempB := posB
 			for true {
 				pos := getCloseAnitnode(tempA, tempB)
-        if !isExist(close, tempA) {
-          close = append(close, tempA)
-        }
+				if !isExist(close, tempA) {
+					close = append(close, tempA)
+				}
 				if !pos.isOutsideBounds(gs.boundaries) && !isExist(close, pos) {
 					close = append(close, pos)
 				} else {
