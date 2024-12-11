@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+  "github.com/ishanzuaim/adventofcode/util"
 )
 
 type Position struct {
