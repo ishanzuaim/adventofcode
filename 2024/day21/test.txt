@@ -1,0 +1,7 @@
+v<<A>>^Av<A<A>>^AAvAA<^A>Av<<A>>^AvA^A<vA^>Av<<A>>^AAvA<^A>A<vA>^A<A>A]
+v<<A>>^Av<A<A>>^AAvAA<^A>Av<<A>>^AAvA<A^>A<A>Av<<A>A>^AAA<Av>A^A<vA>^A<A>A]
+v<<A>>^Av<A<A>>^AAvAA<^A>Av<<A>>^AAvA^Av<A>^AAv<<A>>^A<Av>A^Av<A<A>>^AA<Av>A^A]
+v<<A>>^AAAv<A<A>>^AvAA<^A>Av<A<A>>^AAAvA<^A>Av<<A>>^AAvA^Av<A>^Av<<A>>^AAvA<^A>A]
+v<<A>>^AAvA^Av<<A>A>^AvA<^A>Av<<A>>^AAv<A<A>>^AvAA<^A>Av<<A>A>^AAAvA^A<A>A]
+
+140A*70+180A*74+176A*78+805A*80+638A*74
